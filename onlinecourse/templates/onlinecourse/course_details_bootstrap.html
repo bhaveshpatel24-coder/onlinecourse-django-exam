@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ course.name }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <main class="container py-5">
+    <header class="mb-4">
+      <h1 class="display-5">{{ course.name }}</h1>
+      <p class="lead">{{ course.description }}</p>
+    </header>
+    <h2 class="h3">Lessons</h2>
+    {% if course.lessons.exists %}
+      <div class="list-group mb-4">
+        {% for lesson in course.lessons.all %}
+          <article class="list-group-item">
+            <h3 class="h5">{{ lesson.title }}</h3>
+            <p class="mb-0">{{ lesson.content }}</p>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted">Lessons for this course will be added soon.</p>
+    {% endif %}
+    {% if course.questions.exists %}
+      <a class="btn btn-primary" href="{% url 'take_exam' course.id %}">Take the mock exam</a>
+    {% endif %}
+  </main>
+</body>
+</html>
